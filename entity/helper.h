@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <random>
 
 template <typename T>
@@ -9,4 +10,14 @@ T random_num(T lower_bound, T upper_bound) {
     std::uniform_int_distribution<T> dist(lower_bound, upper_bound);
     return dist(gen);
 }
+
+struct vec2d    
+{
+    float x;
+    float y;
+
+    float magnitude() {
+        return std::pow( x*x + y*y, 0.5);
+    }
+};
 

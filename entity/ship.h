@@ -1,5 +1,6 @@
 #pragma once
 #include "type.h"
+#include "helper.h"
 #include <cmath>
 #include <numbers>
 
@@ -14,7 +15,7 @@ class Ship {
 private:
     float pos_x, pos_y;
     float angle{std::numbers::pi};
-    float speed{0};
+    vec2d speed{0, 0};
     float speed_acc{0};
     bool thrusting{false};
 

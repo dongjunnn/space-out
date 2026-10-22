@@ -25,9 +25,17 @@ entity_info Ship::simulate() {
         speed_acc = std::max(0.f, speed_acc - spool_down * constants::dt);
     }
     thrusting = false;
-    speed = std::min(max_speed, speed + speed_acc * constants::dt);
-    speed *= std::exp(-drag * constants::dt);
-    pos_x += speed * std::cos(angle) * constants::dt;
-    pos_y += speed * std::sin(angle) * constants::dt;
+
+    if (speed.magnitude() < max_speed) {                                // enforcing max speed
+        speed.x += speed_acc * std::cos(angle) * constants::dt;         
+        speed.y += speed_acc * std::sin(angle) * constants::dt;
+    }
+    
+    speed.x *= std::exp(-drag * constants::dt);                         // speed decay
+    speed.y *= std::exp(-drag * constants::dt);   
+
+    pos_x += speed.x * constants::dt;
+    pos_y += speed.y * constants::dt;
+
     return {pos_x, pos_y, angle};
 }
