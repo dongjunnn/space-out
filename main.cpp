@@ -22,7 +22,8 @@ int main() {
         auto [pos_x, pos_y, angle] = ship.simulate();
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawPoly({ pos_x, pos_y }, 3, 20, angle * RAD2DEG, WHITE);
+        auto vertices = gen_triangle_vertices(pos_x, pos_y, angle, 20.f);
+        DrawTriangle(vertices[0], vertices[1], vertices[2], WHITE);
         EndDrawing();
     }
 
