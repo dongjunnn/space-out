@@ -28,3 +28,11 @@ add_executable(space-out
     entity/ship.cpp
 )
 target_link_libraries(space-out PRIVATE raylib)
+
+option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
+if(MSVC)
+    target_compile_options(space-out PRIVATE /W4 $<$<BOOL:${WARNINGS_AS_ERRORS}>:/WX>)
+else()
+    target_compile_options(space-out PRIVATE -Wall -Wextra -Wpedantic -Wshadow
+        $<$<BOOL:${WARNINGS_AS_ERRORS}>:-Werror>)
+endif()
