@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include <format>
 #include "entity/ship.h"
 #include "entity/config.h"
 
@@ -18,10 +19,14 @@ int main() {
         if (IsKeyDown(KEY_RIGHT)) {
             ship.acc_clockwise();
         }
+        if (IsKeyDown(KEY_LEFT_SHIFT)) {
+            ship.boost();
+        }
         // drawing the game objects to screen
         auto [pos_x, pos_y, angle] = ship.simulate();
         BeginDrawing();
         ClearBackground(BLACK);
+        DrawText(TextFormat("Boost: %.2f", ship.get_boost_store()), 0, 760, 25, GREEN);
         DrawPoly({ pos_x, pos_y }, 3, 20, angle * RAD2DEG, WHITE);
         EndDrawing();
     }

@@ -18,15 +18,36 @@ void Ship::acc_anticlockwise() {
     angle -= turn_rate * constants::dt;
 }
 
+float Ship::get_boost_store() {
+    return boost_store;
+}
+
+void Ship::boost() {
+    if (boost_store >= 10) {
+        boost_store -= boost_use_rate * constants::dt;
+
+        boosting = true;
+    }
+    // implicitly else boosting is false
+}
+
 entity_info Ship::simulate() {
     if (thrusting) {
-        speed_acc = std::min(max_acc, speed_acc + jerk * constants::dt);
+        speed_acc = std::min(max_acc + boosting * boost_incr, 
+                             speed_acc + (jerk + (boost_acc_incr * boosting)) * constants::dt);
     } else {
         speed_acc = std::max(0.f, speed_acc - spool_down * constants::dt);
     }
-    thrusting = false;
 
-    if (speed.magnitude() < max_speed) {                                // enforcing max speed
+    if (!boosting && boost_store < max_boost_store) { 
+        boost_store += boost_regen_rate * constants::dt;
+        boost_store = std::min(max_boost_store, boost_store);
+    }
+
+    thrusting = false;
+    boosting = false;
+
+    if (speed.magnitude() < max_speed + boosting * boost_incr) {        // enforcing max speed
         speed.x += speed_acc * std::cos(angle) * constants::dt;         
         speed.y += speed_acc * std::sin(angle) * constants::dt;
     }
