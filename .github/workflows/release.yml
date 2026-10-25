@@ -1,9 +1,9 @@
-name: Build
+name: Release
 
+# Runs when a PR is merged into main. PR checks live in ci.yml.
 on:
   push:
     branches: [main]
-  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -62,8 +62,8 @@ jobs:
 
   release:
     needs: build
-    # Every push to main becomes its own release; pull requests only build.
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # Every push to main becomes its own release.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
