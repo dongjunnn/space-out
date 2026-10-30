@@ -4,8 +4,6 @@
 #include <cmath>
 #include <numbers>
 
-struct ship_vertices;
-
 class Ship {
 private:
     static constexpr float jerk{600.f};
@@ -22,14 +20,14 @@ private:
     bool thrusting{false};
 
 public:
-    static constexpr float dist_from_centre{20.f}; 
-    
+    static constexpr float dist_from_centre{20.f};
+
     Ship();
-    void acc(); 
+    void acc();
     void acc_clockwise();
     void acc_anticlockwise();
-    entity_info simulate();
-    ship_vertices gen_vertice();    
+    void simulate();
+    std::array<Vector2, 3> gen_vertice();
+    entity_info update();
     ~Ship() = default;
 };
-
