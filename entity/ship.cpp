@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cmath>
 
-Ship::Ship() : pos_x(random_num(0, constants::world_x_size)), pos_y(random_num(0, constants::world_y_size)) {}
+Ship::Ship() : pos_x(static_cast<float>(random_num(0, constants::world_x_size))), pos_y(static_cast<float>(random_num(0, constants::world_y_size))) {}
 
 void Ship::acc() {
     thrusting = true;

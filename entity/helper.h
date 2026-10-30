@@ -17,7 +17,7 @@ struct vec2d {
     float y;
 
     float magnitude() {
-        return std::pow(x * x + y * y, 0.5);
+        return std::sqrt(x * x + y * y);
     }
 };
 

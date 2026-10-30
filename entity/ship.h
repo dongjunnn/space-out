@@ -14,7 +14,7 @@ private:
     static constexpr float turn_rate{3.5f};
 
     float pos_x, pos_y;
-    float angle{std::numbers::pi};
+    float angle{std::numbers::pi_v<float>};
     vec2d speed{0, 0};
     float speed_acc{0};
     bool thrusting{false};

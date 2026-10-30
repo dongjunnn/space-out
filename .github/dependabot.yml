@@ -1,0 +1,8 @@
+version: 2
+updates:
+  # Keeps the actions in .github/workflows up to date.
+  # raylib comes in through CMake FetchContent, which Dependabot can't track.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
