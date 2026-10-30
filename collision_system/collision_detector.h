@@ -1,13 +1,14 @@
 #pragma once
 #include <type_traits>
 #include "raylib.h"
+#include "../compiler.h"
 
 float projectPoint(Vector2 axis, Vector2 point) {
     return axis.x * point.x + axis.y * point.y;
 }
 
 namespace collision_detector {
-    [[gnu::always_inline]] inline bool detect_collision(const auto& v1, const auto& v2) {
+    FORCE_INLINE bool detect_collision(const auto& v1, const auto& v2) {
         static_assert(std::is_same_v<decltype(v1), decltype(v2)>, "Input types to collision_detector must match");
         if (v1.size() < 3 || v2.size() < 3) return false;
 
