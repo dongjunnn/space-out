@@ -1,0 +1,22 @@
+#!/bin/sh
+# Rejects commit messages that don't follow Conventional Commits.
+# Enable locally with: git config core.hooksPath .githooks
+# CI runs this same script on every commit in a pull request.
+
+subject=$(head -n 1 "$1")
+
+# Messages git writes itself are fine as-is.
+case "$subject" in
+  "Merge "* | "Revert "* | "fixup! "* | "squash! "*) exit 0 ;;
+esac
+
+pattern='^(feat|fix|ci|docs|refactor|test|chore|perf|build|style|revert)(\([a-z0-9_-]+\))?!?: [^ ].*[^.]$'
+
+if ! printf '%s\n' "$subject" | grep -qE "$pattern"; then
+  echo "Bad commit message: $subject" >&2
+  echo "" >&2
+  echo "Use <type>: <summary>, e.g. 'feat: movable ship' or 'fix(ship): clamp speed'." >&2
+  echo "Types: feat fix ci docs refactor test chore perf build style revert" >&2
+  echo "Summary must not end with a period." >&2
+  exit 1
+fi
